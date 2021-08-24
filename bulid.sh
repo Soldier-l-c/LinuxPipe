@@ -1,0 +1,1 @@
+g++ -Wall -g -o application_s main.cpp CommunicationPipe.cpp PipeRequestCallBack.cpp PipeResponseCallBack.cpp util.cpp  -lpthread
