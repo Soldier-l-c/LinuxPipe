@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "util.h"
-#define MAX_LEN 128
 int32_t Pipe::PipeWrite(const char* pipeName, const std::string& data)
 {
 	int writeFd{0};

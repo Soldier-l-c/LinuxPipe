@@ -39,5 +39,15 @@
 
 #define CHECK_NULL_PTR(ptr)\
 	if(!ptr)return false;
+
+#include <sys/types.h> 
+#include <sys/stat.h>
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
+#include <fcntl.h>
+
 #endif // !STDAFX
 
