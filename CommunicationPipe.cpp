@@ -5,11 +5,15 @@
 #define MAX_LEN 128
 CCommunicatPipe::CCommunicatPipe(const std::string& pipeName) :m_strPipeName(pipeName)
 {
-	std::cout<<"OPen pipe. FileName:  "<<m_strPipeName<<std::endl;
+	auto unlinkRes = _unlink(m_strPipeName.c_str());
+	std::cout << "Unlink pipe. FileName:[" << m_strPipeName << "] Res:["<< unlinkRes <<"]" << std::endl;
+	std::cout << "OPen pipe. FileName:[" << m_strPipeName << "]" << std::endl;
+
 #ifndef WIN32
 	m_nFileId = _open(m_strPipeName.c_str(), O_RDONLY, 0);
 #else
-	_sopen_s(&m_nFileId, m_strPipeName.c_str(), O_RDONLY, 0, 0);
+	auto code = _sopen_s(&m_nFileId, m_strPipeName.c_str(), O_RDONLY | _O_CREAT, _SH_DENYNO,
+		_S_IREAD | _S_IWRITE);//O_RDONLY只读_O_CREAT不存在创建
 #endif // !WIN32
 	std::cout<<"OPen pipe file success. FileName:  "<<m_strPipeName<<std::endl;
 
@@ -19,7 +23,7 @@ CCommunicatPipe::CCommunicatPipe(const std::string& pipeName) :m_strPipeName(pip
 CCommunicatPipe::~CCommunicatPipe()
 {
 	_close(m_nFileId);
-	_unlink(m_strPipeName.c_str());
+	auto code = _unlink(m_strPipeName.c_str());
 }
 
 void CCommunicatPipe::StartRead()

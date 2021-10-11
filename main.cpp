@@ -29,7 +29,20 @@ std::string GetPostData()
 
 bool IsRunning()
 {
-	return true;
+#ifdef WIN32
+	HANDLE hObject = CreateMutex(nullptr, false, L"Global\\{DE45BDFF-B5D1-4B65-BA78-09EC77CA57A0}_Pipe");
+
+	if (nullptr == hObject || GetLastError() == ERROR_ALREADY_EXISTS)
+	{
+		if (nullptr != hObject)CloseHandle(hObject);
+		return true;
+	}
+
+	return false;
+#else
+
+#endif // WIN32
+
 }
 
 void OnFirstProcessRun()
@@ -37,7 +50,6 @@ void OnFirstProcessRun()
 	std::cout<<"First process"<<std::endl;
 	CCommunicatPipe pipe(RESQUEST_PIPE);
 	std::cout<<"First process_1"<<std::endl;
-
 	std::shared_ptr<IPipeCallBack> spCallBack(static_cast<IPipeCallBack*>(new PipeRequestCallback()));
 	pipe.SetCallBack(spCallBack);
 	pipe.StartRead();
@@ -47,14 +59,15 @@ void OnSecondProcessRun()
 {
 	auto data = GetPostData();
 	Pipe::PipeWrite(RESQUEST_PIPE, data);
-
-	std::cout<<"Secont process"<<std::endl;
+	
+	std::cout<<"Second process"<<std::endl;
 	CCommunicatPipe pipe(RESPONSE_PIPE);
 	std::cout<<"Second process_1"<<std::endl;
 
 	std::shared_ptr<IPipeCallBack> spCallBack(static_cast<IPipeCallBack*>(new PipeResponse()));
 	pipe.SetCallBack(spCallBack);
 	pipe.StartRead();
+
 }
 
 int main()
@@ -68,6 +81,9 @@ int main()
 	else
 	{
 		OnSecondProcessRun();
+#ifdef WIN32
+		system("pause");
+#endif // WIN32
 	}
 	return 0;
 }

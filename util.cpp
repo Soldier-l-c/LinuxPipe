@@ -14,13 +14,14 @@ int32_t Pipe::PipeWrite(const char* pipeName, const std::string& data)
 #ifndef WIN32
 	writeFd = _open(pipeName, O_WRONLY, 0);
 #else
-	int hFile{ 0 };
-	_sopen_s(&hFile, pipeName, O_RDONLY, 0, 0);
+	auto code = _sopen_s(&writeFd, pipeName, _O_RDWR | _O_APPEND | _O_CREAT,
+		_SH_DENYNO, _S_IREAD | _S_IWRITE);//_O_APPEND追加方式写，_O_CREAT不存在创建， _SH_DENYNO共享读写
 #endif // !WIN32
 
 	/*向管道写入数据*/
-	auto len = _write(writeFd, data.c_str(), data.length());
-	std::cout << "Data write len: " << len << " data:" << data<<std::endl;
+	auto len = _write(writeFd, data.c_str(), (int)data.length());
+	std::cout << "Data write len: " << len << " data:" << data << std::endl;
+
 	_close(writeFd);
 	return 0;
 }
