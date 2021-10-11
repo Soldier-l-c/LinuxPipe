@@ -17,6 +17,12 @@ namespace Pipe
 {
 	int32_t PipeWrite(const char* pipeName, const std::string& dat);
 }
+
+namespace SingleInstance
+{
+	bool IsRunning();
+}
+
 namespace Json
 {
 	std::string MakeReaponseStr(const ERR_CODE errcode, const std::string& errMsg);

@@ -27,24 +27,6 @@ std::string GetPostData()
 	return "";
 }
 
-bool IsRunning()
-{
-#ifdef WIN32
-	HANDLE hObject = CreateMutex(nullptr, false, L"Global\\{DE45BDFF-B5D1-4B65-BA78-09EC77CA57A0}_Pipe");
-
-	if (nullptr == hObject || GetLastError() == ERROR_ALREADY_EXISTS)
-	{
-		if (nullptr != hObject)CloseHandle(hObject);
-		return true;
-	}
-
-	return false;
-#else
-
-#endif // WIN32
-
-}
-
 void OnFirstProcessRun()
 {
 	std::cout<<"First process"<<std::endl;
@@ -74,7 +56,7 @@ int main()
 {
 	std::cout<<"Started process"<<std::endl;
 	
-	if (!IsRunning())
+	if (!SingleInstance::IsRunning())
 	{
 		OnFirstProcessRun();
 	}

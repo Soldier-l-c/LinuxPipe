@@ -10,7 +10,7 @@ CCommunicatPipe::CCommunicatPipe(const std::string& pipeName) :m_strPipeName(pip
 	std::cout << "OPen pipe. FileName:[" << m_strPipeName << "]" << std::endl;
 
 #ifndef WIN32
-	m_nFileId = _open(m_strPipeName.c_str(), O_RDONLY, 0);
+	m_nFileId = _open(m_strPipeName.c_str(), O_RDONLY | O_CREAT, 0);
 #else
 	auto code = _sopen_s(&m_nFileId, m_strPipeName.c_str(), O_RDONLY | _O_CREAT, _SH_DENYNO,
 		_S_IREAD | _S_IWRITE);//O_RDONLY只读_O_CREAT不存在创建
