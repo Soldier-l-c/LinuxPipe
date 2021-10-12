@@ -12,7 +12,7 @@ std::string GetPostData()
 #else 
 	char* lenstr = getenv("CONTENT_LENGTH");
 #endif // WIN32
-	if (lenstr == NULL)
+	if (lenstr == nullptr)
 	{
 		code = E_FAIE;
 		errMsg << "Error, CONTENT_LENGTH should be entered!";

@@ -16,7 +16,6 @@ CCommunicatPipe::CCommunicatPipe(const std::string& pipeName) :m_strPipeName(pip
 		_S_IREAD | _S_IWRITE);//O_RDONLY只读_O_CREAT不存在创建
 #endif // !WIN32
 	std::cout<<"OPen pipe file success. FileName:  "<<m_strPipeName<<std::endl;
-
 	m_bIsInited = m_nFileId > 0;
 }
 
