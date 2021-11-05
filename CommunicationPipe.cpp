@@ -60,7 +60,10 @@ void CCommunicatPipe::__Read()
 			if (data.length() > 0)
 			{
 				std::cout << "Data read: " << data << std::endl;
-				m_spCallBack->OnDataRead(data.c_str(), data.length());
+				if (m_spCallBack.use_count() > 0)
+				{
+					m_spCallBack.lock()->OnDataRead(data.c_str(), data.length());
+				}
 			}
 
 			if (!__ResidentProcess())

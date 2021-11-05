@@ -24,7 +24,7 @@ std::string GetPostData()
 		fgets(postPtr.get(), len + 1, stdin);
 		return postPtr.get();
 	}
-	return "";
+	return "empty message";
 }
 
 void OnFirstProcessRun()

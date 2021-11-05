@@ -14,5 +14,5 @@ private:
 	std::string m_strPipeName;
 	int32_t m_nFileId{ 0 };
 	bool m_bIsInited{ false };
-	std::shared_ptr<IPipeCallBack> m_spCallBack;
+	std::weak_ptr<IPipeCallBack> m_spCallBack;
 };
