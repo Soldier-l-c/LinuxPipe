@@ -1,5 +1,5 @@
 #cmake .
-# 生成release
+# 生成release项目，用于命令行
 # cmake --build . --config Release  
 
 # CMake 最低版本号要求
