@@ -26,8 +26,8 @@ endif()
 aux_source_directory(. DIR_SRCS)
 
 # 指定生成目标
-add_executable(LinuxPipe.app ${DIR_SRCS})
+add_executable(${PROJECT_NAME} ${DIR_SRCS})
 
 #连接lib须在指定生成目标之后
 FIND_PACKAGE(Threads)
-TARGET_LINK_LIBRARIES(LinuxPipe.app ${CMAKE_THREAD_LIBS_INIT})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
